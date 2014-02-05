@@ -1,33 +1,40 @@
-/***************************************************************
- * HW1.c|
- * _____|
+/****************************************************************************
+ * +++HW1.c+++|
+ * ___________|
  *
  * Author: Sean Frischmann
  * Class: Cse 305
- **************************************************************/
+ ***************************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
 
-void hw1(char *inputFile){
-	FILE *file_to_open;
-	file_to_open = fopen(inputFile, "r");
-	char line = NULL;
-	const char *contents;
-	size_t len = 0;
-	ssize_t read;
-	int pos = 0;
-	while((read = getline(&line, &len, file_to_open)) != -1){
-		contents[pos] = line;
-		pos++;
+/*===========================================================================
+ * |hw1|
+ *
+ * -The purose of this method is to read the contents of a file and print to 
+ *  a designated file each character of the file with a < before the character
+ *  and a > after. If it's a newline character it prints a < followed by a >
+ *  on the next line.
+ *
+ * Variables Passed in:
+ *                     -Name of input file
+ *                     -Name of output file
+ *==========================================================================*/
+
+void hw1(char *inputFile, char *outputFile){
+	FILE *opened_file;
+	FILE *return_file;
+	opened_file = fopen(inputFile, "r");
+	return_file = fopen(outputFile,"w+");
+	int c;
+	while((c = fgetc(opened_file)) != EOF){
+		if(c == '\n'){
+			const char *end_line = ">\n<\n";
+			fprintf(return_file,"%s",end_line);
+		}else{
+			fprintf(return_file,">%c<\n",c);
+		}
 	}
-	size_t contents_length = sizeof(contents);
-	for(size_t i=0; i< contents_length; i++){
-		printf(contents[i]);
-	}
-	fclose(file_to_open);
-}
-int main(){
-	hw1("foo.txt");
-	return 0;
+	fclose(opened_file);
 }
