@@ -6,7 +6,6 @@
  * Class: Cse 305
  *=========================================================================*)
 
-
 (****************************************************************************
  * |hw1|
  *
@@ -21,19 +20,25 @@
  ***************************************************************************)
 
 fun hw1(inputFile, outputFile) =
-    val stream_in = TEXT_IO.openIn inputFile
-    val stream_out = TEXT_IO.openOut outputFile
-    while true do (
-        if IMPERATIVE_IO.endOfStream(stream_in) then (
-            val ch = IMPERATIVE_IO.input1(stream_in) 
-            if ch = '\n' then (
-                TEXT_IO.outputSubstr(stream_out, ">\n"+"<\n")
+    let
+        val stream_in = TEXT_IO.openIn inputFile
+        val stream_out = TEXT_IO.openOut outputFile
+        val switch = true
+        val ch = ' '
+    in
+        while (switch = true) do (
+            if IMPERATIVE_IO.endOfStream(stream_in) then (
+                ch = IMPERATIVE_IO.input1(stream_in) 
+                if ch = '\n' then (
+                    TEXT_IO.outputSubstr(stream_out, ">\n"+"<\n")
+                )else(
+                    TEXT_IO.outputSubstr(stream_out, ">"+ch+"<\n")
+                )
             )else(
-                TEXT_IO.outputSubstr(stream_out, ">"+ch+"<\n")
+                val _ = IMPERATIVE_IO.closeIn steam_in
+                val _ = IMPERATIVE_IO.closeOut stream_out
+                switch = false
             )
-        )else(
-            val _ = IMPERATIVE_IO.closeIn steam_in
-            val _ = IMPERATIVE_IO.closeOut stream_out
-    );
+        );
 end;
 
