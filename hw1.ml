@@ -20,14 +20,20 @@
  *                     -Name of output file
  ***************************************************************************)
 
-fun fileToString inputFile = let
-    val stream = open_in inputFile
-    val str = input(stream, can_input stream)
-    val _ = close_in stream
-in str end;
+fun hw1(inputFile, outputFile) =
+    val stream_in = TEXT_IO.openIn inputFile
+    val stream_out = TEXT_IO.openOut outputFile
+    while true do (
+        if IMPERATIVE_IO.endOfStream(stream_in) then (
+            val ch = IMPERATIVE_IO.input1(stream_in) 
+            if ch = '\n' then (
+                TEXT_IO.outputSubstr(stream_out, ">\n"+"<\n")
+            )else(
+                TEXT_IO.outputSubstr(stream_out, ">"+ch+"<\n")
+            )
+        )else(
+            val _ = IMPERATIVE_IO.closeIn steam_in
+            val _ = IMPERATIVE_IO.closeOut stream_out
+    );
+end;
 
-fun fileToList inputFile = let
-    fun f fh = if end_of_stream fh then
-        let val _ = close_in fh in nil end
-        else (input_line fh)::(f fh)
-in f(open_in inputFile) end;
