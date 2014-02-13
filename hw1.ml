@@ -27,16 +27,16 @@ fun hw1(inputFile, outputFile) =
         val ch = ' '
     in
         while (switch = true) do (
-            if IMPERATIVE_IO.endOfStream(stream_in) then (
-                ch = IMPERATIVE_IO.input1(stream_in) 
+            if TEXT_IO.endOfStream(stream_in) then (
+                ch = TEXT_IO.input1(stream_in) 
                 if ch = '\n' then (
                     TEXT_IO.outputSubstr(stream_out, ">\n"+"<\n")
                 )else(
                     TEXT_IO.outputSubstr(stream_out, ">"+ch+"<\n")
                 )
             )else(
-                val _ = IMPERATIVE_IO.closeIn steam_in
-                val _ = IMPERATIVE_IO.closeOut stream_out
+                val _ = TEXT_IO.closeIn steam_in
+                val _ = TEXT_IO.closeOut stream_out
                 switch = false
             )
         );
