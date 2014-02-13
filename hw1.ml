@@ -19,26 +19,17 @@
  *                     -Name of output file
  ***************************************************************************)
 
-fun hw1(inputFile, outputFile) =
+fun hw1(inputFile: string, outputFile: string) =
     let
-        val stream_in = TEXT_IO.openIn inputFile
-        val stream_out = TEXT_IO.openOut outputFile
-        val switch = true
-        val ch = ' '
+        val stream_in = TextIO.openIn inputFile
+        val stream_out = TextIO.openOut outputFile
+        fun helper(char_opt: char option) =
+            case char_opt of 
+                NONE => (TextIO.closeIn stream_in; TextIO.closeOut stream_out)
+              | SOME(c) => (TextIO.output1(stream_out, #">"); 
+                TextIO.output1(stream_out, c);TextIO.output1(stream_out, #"<"); 
+                TextIO.output1(stream_out, #"\n"); helper(TextIO.input1 stream_in))
     in
-        while (switch = true) do (
-            if TEXT_IO.endOfStream(stream_in) then (
-                ch = TEXT_IO.input1(stream_in) 
-                if ch = '\n' then (
-                    TEXT_IO.outputSubstr(stream_out, ">\n"+"<\n")
-                )else(
-                    TEXT_IO.outputSubstr(stream_out, ">"+ch+"<\n")
-                )
-            )else(
-                val _ = TEXT_IO.closeIn steam_in
-                val _ = TEXT_IO.closeOut stream_out
-                switch = false
-            )
-        );
-end;
+        helper(TextIO.input1 stream_in)
+end
 
