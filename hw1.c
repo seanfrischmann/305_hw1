@@ -29,12 +29,7 @@ void hw1(char *inputFile, char *outputFile){
 	return_file = fopen(outputFile,"w+");
 	int c;
 	while((c = fgetc(opened_file)) != EOF){
-		if(c == '\n'){
-			const char *end_line = ">\n<\n";
-			fprintf(return_file,"%s",end_line);
-		}else{
-			fprintf(return_file,">%c<\n",c);
-		}
+		fprintf(return_file,">%c<\n",c);
 	}
 	fclose(opened_file);
 }

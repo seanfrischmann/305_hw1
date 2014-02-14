@@ -19,15 +19,14 @@
 #                     -Name of output file
 # ***************************************************************************
 def hw1(inputFile, outputFile):
-	with open(inputFile) as f:
-		ret = open(outputFile, 'w+')
+	with open(inputFile) as fileIn:
+		fileOut = open(outputFile, 'w+')
 		while True:
-			contents = f.read(1)
+			contents = fileIn.read(1)
 			if not contents:
+				fileOut.close()
+				fileIn.close()
 				break
-			if contents == '\n':
-				ret.write('>' + '\n' + '<\n')
 			else:
-				ret.write('>'+contents+'<\n')
-	ret.close()
+				fileOut.write('>'+contents+'<\n')
 
