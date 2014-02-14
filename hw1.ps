@@ -1,0 +1,35 @@
+%****************************************************************************
+ % +++HW1.ps+++|
+ % ___________|
+ %
+ % Author: Sean Frischmann
+ % Class: Cse 305
+%****************************************************************************
+
+%*===========================================================================
+ % |hw1|
+ %
+ % -The purose of this method is to read the contents of a file and print to 
+ %  a designated file each character of the file with a > before the character
+ %  and a < after. If it is a newline character it prints a > followed by a <
+ %  on the next line.
+ %
+ % Variables Passed in:
+ %                     -Name of input file
+ %                     -Name of output file
+%*===========================================================================
+
+/infile (./input.txt) (r) file 
+/outfile (%stdout) (w) file def
+(
+infile read(
+	outfile exch write
+	)(
+	infile closefile
+	outfile closefile
+	exit
+	)ifelse
+		(in read loop, character read is ) print dup == flush
+		outfile exch write
+
+)bind loop
