@@ -18,18 +18,23 @@
  %                     -Name of input file
  %                     -Name of output file
 %*===========================================================================
-
-/infile (./input.txt) (r) file 
-/outfile (%stdout) (w) file def
-(
-infile read(
-	outfile exch write
-	)(
+%!PS
+/hw1{
+/outfile exch (w) file def
+/infile exch (r) file def 
+/buff 1 string def
+{
+infile buff  readstring
+	{
+		outfile (>) writestring
+		outfile exch writestring
+		outfile (<) writestring
+		outfile (\n) writestring
+	}{
 	infile closefile
 	outfile closefile
 	exit
-	)ifelse
-		(in read loop, character read is ) print dup == flush
-		outfile exch write
+	}ifelse
 
-)bind loop
+}bind loop
+}def
